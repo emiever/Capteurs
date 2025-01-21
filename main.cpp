@@ -19,7 +19,14 @@
 
 using namespace std::chrono;
 
+Timer timer;
+InterruptIn bp(BUTTON1);
+microseconds freq = 100ms;
 Ticker flipper;
+
+void button(){
+    freq = freq + 50ms;
+}
 
 void notled(){
     led = !led;
@@ -27,8 +34,11 @@ void notled(){
 
 int main()
 {
-    led = 1;
-    flipper.attach(&notled, 0.5);
+    bp.rise(&button);
+    //led = 1;
+    while(1){
+        flipper.attach(&notled, freq);
+        ThisThread::sleep_for(BLINKING_RATE);
+    }
 }
-
 
