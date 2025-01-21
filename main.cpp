@@ -20,21 +20,28 @@
 using namespace std::chrono;
 
 Timer timer;
-DigitalIn bp(BUTTON1);
+InterruptIn bp(BUTTON1);
+long long unsigned int val_timer = 0;
 
+void start(){
+    timer.start();
+}
+
+void stop(){
+    timer.stop();
+    val_timer = duration_cast<milliseconds>(timer.elapsed_time()).count();
+    timer.reset();
+}
 
 
 int main()
 {
+    bp.rise(&start);
+    bp.fall(&stop);
     while(1){
-        if(bp.read()==1){
-            timer.start();
-            while(bp.read()==1){}
-            timer.stop();
-            printf("The time elapsed during button pressed was %llu milliseconds\n", duration_cast<milliseconds>(timer.elapsed_time()).count());
-            timer.reset();
-        }
-       
+    printf("The time elapsed during button pressed was %llu milliseconds\n", val_timer);
+    ThisThread::sleep_for(BLINKING_RATE);
     }
 }
+
 
