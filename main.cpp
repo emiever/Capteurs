@@ -19,29 +19,16 @@
 
 using namespace std::chrono;
 
-Timer timer;
-InterruptIn bp(BUTTON1);
-long long unsigned int val_timer = 0;
+Ticker flipper;
 
-void start(){
-    timer.start();
+void notled(){
+    led = !led;
 }
-
-void stop(){
-    timer.stop();
-    val_timer = duration_cast<milliseconds>(timer.elapsed_time()).count();
-    timer.reset();
-}
-
 
 int main()
 {
-    bp.rise(&start);
-    bp.fall(&stop);
-    while(1){
-    printf("The time elapsed during button pressed was %llu milliseconds\n", val_timer);
-    ThisThread::sleep_for(BLINKING_RATE);
-    }
+    led = 1;
+    flipper.attach(&notled, 0.5);
 }
 
 
