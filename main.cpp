@@ -26,8 +26,14 @@ DigitalIn bp(BUTTON1);
 
 
     while (true) {
-        led = !led;
+        
         printf("valeur de bp1 :%d\n", bp.read());
+        if(bp.read() == 1){
+            led = 1;
+        }
+        else{
+            led = 0;
+        }
         ThisThread::sleep_for(BLINKING_RATE);
     }
 }
