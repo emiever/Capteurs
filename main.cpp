@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 // Blinking rate in milliseconds
 #define BLINKING_RATE     500ms
 
@@ -21,9 +20,14 @@ int main()
     bool led;
 #endif
 
+
+DigitalIn bp(BUTTON1);
+
+
+
     while (true) {
         led = !led;
-        printf("bonjour depuis la carte\n");
+        printf("valeur de bp1 :%d\n", bp.read());
         ThisThread::sleep_for(BLINKING_RATE);
     }
 }
