@@ -17,20 +17,24 @@
     bool led;
 #endif
 
-InterruptIn bp(BUTTON1);
+using namespace std::chrono;
 
-void allumee()
-{
-    led = 1;
-}
+Timer timer;
+DigitalIn bp(BUTTON1);
 
-void eteinte()
-{
-    led = 0;
-}
+
 
 int main()
 {
-bp.rise(&allumee);
-bp.fall(&eteinte);
+    while(1){
+        if(bp.read()==1){
+            timer.start();
+            while(bp.read()==1){}
+            timer.stop();
+            printf("The time elapsed during button pressed was %llu milliseconds\n", duration_cast<milliseconds>(timer.elapsed_time()).count());
+            timer.reset();
+        }
+       
+    }
 }
+
