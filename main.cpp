@@ -4,6 +4,8 @@
  */
 
 #include "mbed.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 
 // Blinking rate in milliseconds
@@ -21,6 +23,7 @@ int main()
 
     while (true) {
         led = !led;
+        printf("bonjour depuis la carte\n");
         ThisThread::sleep_for(BLINKING_RATE);
     }
 }
